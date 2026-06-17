@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://buaxyw6k8660o"]
+
+[ext_resource type="Texture2D" uid="uid://x2ngtvvfmh0p" path="res://polish/CHECKER PATTERN.png" id="1_nkbdo"]
+
+[resource]
+albedo_texture = ExtResource("1_nkbdo")
+uv1_scale = Vector3(11, 7.33, 10)
+uv1_offset = Vector3(0.25, 0.25, 0)
+texture_filter = 0
