@@ -11,10 +11,6 @@
 [ext_resource type="Script" uid="uid://cl3id6xn44fr7" path="res://scripts/next_patrol_point.gd" id="10_4c57u"]
 [ext_resource type="Script" uid="uid://cdny53km5uhfe" path="res://wait.gd" id="11_efxa6"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0xm2m"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_h2yge"]
@@ -25,20 +21,11 @@
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_7mycd"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_4c57u"]
+vertices = PackedVector3Array(-9.5, 0.5, -9.5, -9.5, 0.5, 9.5, 9.5, 0.5, 9.5, 9.5, 0.5, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [node name="Node3D" type="Node3D" unique_id=1106196604]
-
-[node name="ground" type="Node3D" parent="." unique_id=1254187805]
-transform = Transform3D(12.644591, 0, 0, 0, 1, 0, 0, 0, 12.644591, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ground" unique_id=1438779712]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-material_override = ExtResource("1_272bh")
-mesh = SubResource("BoxMesh_7dm0k")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="ground" unique_id=1064255122]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D" unique_id=1887919337]
-shape = SubResource("BoxShape3D_ig7tw")
 
 [node name="player" type="CharacterBody3D" parent="." unique_id=1965963313]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4168415, 1.9999995, 3.7067456)
@@ -66,7 +53,7 @@ mesh = SubResource("CylinderMesh_7mycd")
 
 [node name="BeehaveTree" type="Node" parent="enemy" unique_id=1957076834 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("2_0xm2m")
-blackboard = NodePath("@Node@18549")
+blackboard = NodePath("@Node@18547")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
@@ -92,14 +79,26 @@ metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
 [node name="nextPatrolPoint" type="Node" parent="enemy/BeehaveTree/SelectorComposite/patrolSequence" unique_id=1422239791]
 script = ExtResource("10_4c57u")
+patrol_points = PackedVector3Array(0, 2, 0, 2, 2, 0, 4, 4, 2)
 metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [node name="wait" type="Node" parent="enemy/BeehaveTree/SelectorComposite/patrolSequence" unique_id=1951871590]
 script = ExtResource("11_efxa6")
 metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="enemy" unique_id=1639946078]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1786375896]
 transform = Transform3D(1, 0, 0, 0, 0.4179622, 0.90846443, 0, -0.90846443, 0.4179622, -0.6637485, 10.329334, 8.842236)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2116614190]
 transform = Transform3D(1, 0, 0, 0, 0.4179622, 0.90846443, 0, -0.90846443, 0.4179622, -0.6637485, 10.329334, 5.7501745)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=811955919]
+navigation_mesh = SubResource("NavigationMesh_4c57u")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1331527047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = ExtResource("1_272bh")
+use_collision = true
+size = Vector3(20, 1, 20)
